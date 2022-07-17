@@ -10,6 +10,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 
 class SearchItem(BaseModel):
     text:str
+    model:str
 
 app = FastAPI()
 
@@ -30,9 +31,14 @@ async def find_personality(search:SearchItem):
     postList=[]
     postList.append(search.text)
     vectorize_post=vectorizer.transform(postList)
-    loaded_model = pickle.load(open("./models/logistic.sav", 'rb'))
+    loaded_model=None
+    if search.model=="MultiNomial Naive Bayes":
+        loaded_model = pickle.load(open("./models/multinomial.sav", 'rb')) 
+    elif search.model=="Logistic Regression":
+        loaded_model = pickle.load(open("./models/logistic.sav", 'rb')) 
+    else:
+        loaded_model = pickle.load(open("./models/rf_classifier.sav", 'rb')) 
     result = loaded_model.predict(vectorize_post)[0]
-    print(result)
     return {"searchResult":result}
 
 

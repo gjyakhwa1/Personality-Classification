@@ -48,11 +48,15 @@
       <div class="form-group">
         <h2 style="margin-bottom: 2rem;">Find Your Personality</h2>
         <form method="post" id="search-personality">
+            <select name="model" id="model">
+                <option value="MultiNomial Naive Bayes">MultiNomial Naive Bayes</option>
+                <option value="Logistic Regression">Logistic Regression</option>
+                <option value="Random Forest Classifier">Random Forest Classifier</option>
+              </select>
         <textarea name="personality-text" id="textarea-container" cols="30" rows="15"></textarea>
         <input type="submit" id="submit-button">
     </form>
     <div id="result-container">
-        hello
     </div>
     </div>
     </div> 

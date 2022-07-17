@@ -2,20 +2,21 @@ const form = document.getElementById("search-personality");
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
   innerText = event.target["personality-text"].value;
-  const data = await displayResult(innerText);
+  modelChoose =
+    event.target["model"].options[event.target["model"].selectedIndex].value;
+
+  const data = await displayResult(innerText, modelChoose);
+
   resultContainer = document.getElementById("result-container");
   resultContainer.innerText = data["searchResult"];
   resultContainer.style.display = "block";
 });
-function displayResult(data) {
-  console.log("Here");
-  resultContainer = document.getElementById("result-container");
-  resultContainer.style.display = "block";
-}
-async function displayResult(text) {
+
+async function displayResult(text, model) {
   var queryUrl = "http://127.0.0.1:8000/";
   payload = {
     text: text,
+    model: model,
   };
   settings = {
     method: "POST",
