@@ -6,9 +6,13 @@ form.addEventListener("submit", async (event) => {
     event.target["model"].options[event.target["model"].selectedIndex].value;
 
   const data = await displayResult(innerText, modelChoose);
-
+  value = data["searchResult"];
   resultContainer = document.getElementById("result-container");
-  resultContainer.innerText = data["searchResult"];
+  resultContainer.innerText = `Your Personality type is ${value} 
+  ${value[0]}: ${get(value[0])}
+  ${value[1]}: ${get(value[1])}
+  ${value[2]}: ${get(value[2])}
+  ${value[3]}: ${get(value[3])}`;
   resultContainer.style.display = "block";
 });
 
@@ -28,4 +32,20 @@ async function displayResult(text, model) {
   response = await fetch(queryUrl, settings);
   var data = await response.json();
   return data;
+}
+
+dictionary = {
+  E: "Extrovert",
+  I: "Introvert",
+  N: "Intuition",
+  S: "Sensing",
+  T: "Thinking",
+  F: "Feeling",
+  J: "Judging",
+  P: "Perceiving",
+};
+
+function get(key) {
+  var result = dictionary[key];
+  return typeof result !== "undefined" ? result : "";
 }

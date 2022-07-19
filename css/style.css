@@ -24,7 +24,7 @@ body {
   width: 225px;
   top: 0;
   left: 0;
-  background: rgb(5, 68, 104);
+  background: #074f57;
   height: 100%;
   padding: 20px 0;
   transition: all 0.4s;
@@ -49,7 +49,7 @@ body {
   position: fixed;
   top: 0;
   left: 0;
-  background: rgb(7, 105, 185);
+  background: #077187;
   height: 50px;
   display: flex;
   align-items: center;
@@ -254,6 +254,22 @@ input[type="submit"]:hover {
 }
 #result-container
 {
-  color:red;
+  color:#074F57;
+  text-align: center;
+  padding:10px;
+  font-size: 20px;
+  background-color: #E4C5AF;
   display:None;
+  border-radius: 5px;;
 }
+.graph {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(100px, 0.5fr));
+  /* gap: 48px 32px; */
+  padding: 30px;
+  width: 85%;
+  margin-left:15%;
+  margin-top:15px;
+}
+

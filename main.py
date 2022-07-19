@@ -36,6 +36,10 @@ async def find_personality(search:SearchItem):
         loaded_model = pickle.load(open("./models/multinomial.sav", 'rb')) 
     elif search.model=="Logistic Regression":
         loaded_model = pickle.load(open("./models/logistic.sav", 'rb')) 
+    elif search.model=="Linear Support Vector Classifier":
+        loaded_model = pickle.load(open("./models/linear_svc.sav", 'rb'))
+    elif search.model=='K Nearest Neighbor':
+        loaded_model = pickle.load(open("./models/knn.sav", 'rb'))
     else:
         loaded_model = pickle.load(open("./models/rf_classifier.sav", 'rb')) 
     result = loaded_model.predict(vectorize_post)[0]
