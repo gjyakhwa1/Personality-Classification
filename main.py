@@ -38,8 +38,6 @@ models["Random Forest Classifier"]= pickle.load(open("./models/rf_classifier.sav
 
 @app.post("/")
 async def find_personality(search: SearchItem):
-    postList = []
-    postList.append(search.text)
-    vectorize_post = vectorizer.transform(postList)
+    vectorize_post = vectorizer.transform([search.text])
     result = models[search.model].predict(vectorize_post)[0]
     return {"searchResult": result}
