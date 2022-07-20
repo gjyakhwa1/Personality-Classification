@@ -8,9 +8,11 @@ from pydantic import BaseModel
 import pickle
 from sklearn.feature_extraction.text import CountVectorizer
 
+
 class SearchItem(BaseModel):
-    text:str
-    model:str
+    text: str
+    model: str
+
 
 app = FastAPI()
 
@@ -24,25 +26,20 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-vectorizer=pickle.load(open('./models/vectorizer.sav','rb'))
+vectorizer = pickle.load(open('./models/vectorizer.sav', 'rb'))
+
+models = {}
+models["MultiNomial Naive Bayes"]=pickle.load(open("./models/multinomial.sav", 'rb'))
+models["Logistic Regression"]=pickle.load(open("./models/logistic.sav", 'rb'))
+models["Linear Support Vector Classifier"]=pickle.load(open("./models/linear_svc.sav", 'rb'))
+models["K Nearest Neighbor"]=pickle.load(open("./models/knn.sav", 'rb'))
+models["Random Forest Classifier"]= pickle.load(open("./models/rf_classifier.sav", 'rb'))
+
 
 @app.post("/")
-async def find_personality(search:SearchItem):
-    postList=[]
+async def find_personality(search: SearchItem):
+    postList = []
     postList.append(search.text)
-    vectorize_post=vectorizer.transform(postList)
-    loaded_model=None
-    if search.model=="MultiNomial Naive Bayes":
-        loaded_model = pickle.load(open("./models/multinomial.sav", 'rb')) 
-    elif search.model=="Logistic Regression":
-        loaded_model = pickle.load(open("./models/logistic.sav", 'rb')) 
-    elif search.model=="Linear Support Vector Classifier":
-        loaded_model = pickle.load(open("./models/linear_svc.sav", 'rb'))
-    elif search.model=='K Nearest Neighbor':
-        loaded_model = pickle.load(open("./models/knn.sav", 'rb'))
-    else:
-        loaded_model = pickle.load(open("./models/rf_classifier.sav", 'rb')) 
-    result = loaded_model.predict(vectorize_post)[0]
-    return {"searchResult":result}
-
-
+    vectorize_post = vectorizer.transform(postList)
+    result = models[search.model].predict(vectorize_post)[0]
+    return {"searchResult": result}
