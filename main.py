@@ -6,7 +6,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
 import pickle
-from sklearn.feature_extraction.text import CountVectorizer
+
+import uvicorn
 
 
 class SearchItem(BaseModel):
@@ -41,3 +42,6 @@ async def find_personality(search: SearchItem):
     vectorize_post = vectorizer.transform([search.text])
     result = models[search.model].predict(vectorize_post)[0]
     return {"searchResult": result}
+
+if __name__ == "__main__":
+    uvicorn.run("main:app")
